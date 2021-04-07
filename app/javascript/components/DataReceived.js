@@ -1,10 +1,10 @@
 import React from 'react';
 
-function DataReceived ({items}) {
-    let data = items.map(item => {
+function DataReceived ({items, addToFavorites}) {
+    let data = items.map((item,index) => {
         return (
             <div className="row" key={item.id}>
-                <button type="button" className="col-3 btn btn-outline-warning btn-sm">
+                <button id={index} onClick={(e)=>addToFavorites(e)} type="button" className="col-3 btn btn-outline-warning">
                     Add to FavOrites
                 </button>
                 <div className="col-2">{item.id}</div>

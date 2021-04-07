@@ -1,11 +1,17 @@
 // Place all the styles related to the page controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
-$color:blue;
+$color:#0000ff;
+$height: 70px;
+$width: 95px;
 .name{
-    color: $color
+    color: $color;
 }
 
 .h-70{
-    height: 70px;
+    height: $height;
+}
+
+button{
+    width: $width !important
 }
