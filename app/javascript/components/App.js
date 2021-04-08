@@ -2,12 +2,15 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import DataReceived from './DataReceived';
 import Favorites from './Favorites';
+import Modal from './Modal'
 // import { data } from 'jquery';
 
 export default function App(){
 
 const [favorites, setFavorites] = useState([]);
 const [items, setItems] = useState([]);
+const [error,setError] =useState(false);
+
 const getLocalData = JSON.parse(localStorage.getItem('favorites') || "0");
 
 
@@ -36,16 +39,28 @@ const getLocalData = JSON.parse(localStorage.getItem('favorites') || "0");
         )
     }
 
+    let checkForDublicates = function ({id}) {
+        return favorites.filter(item => item.id===id).length;
+    }
+
     let addToFavorites = (e) => {
-        checkForDublicates()
-        setFavorites(favorites.concat(items[e.target.id]))
+        checkForDublicates(items[e.target.id]) ===0 ? 
+            setFavorites(favorites.concat(items[e.target.id])) :
+                setError(true);
     }
 
     let removeFromFavorites = function(id) {
-        setFavorites(favorites.slice(0,id).concat(favorites.slice(id+1,favorites.length)))
+        setFavorites(favorites.slice(0,id).concat(favorites.slice(id+1,favorites.length)));
+    }
+
+    function updateFavorites(value, id){
+          console.log(value,"   ", id)
+          setFavorites(favorites.slice(0,id).concat([{id: favorites[id].id, name : value}])
+          .concat(favorites.slice(id+1,favorites.length)))
     }
 
         return(
+            <>
             <div className="container">
                 <div className="row">
                     <div className="col-8 pl-0">
@@ -61,13 +76,15 @@ const getLocalData = JSON.parse(localStorage.getItem('favorites') || "0");
                 </div>
                 <div className="row">
                     <div className="col-8">
-                        <Favorites favorites={favorites} removeFromFavorites={removeFromFavorites} />
+                        <Favorites favorites={favorites} removeFromFavorites={removeFromFavorites} updateFavorites={updateFavorites} />
                     </div>
                     <div className="col-4">
                         <DataReceived items={items} addToFavorites={addToFavorites} />
                     </div>
                 </div>
             </div>
+            {error && <Modal />}
+            </>
         )
 
 }

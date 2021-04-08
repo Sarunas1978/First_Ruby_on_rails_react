@@ -4,7 +4,7 @@ function DataReceived ({items, addToFavorites}) {
     let data = items.map((item,index) => {
         return (
             <div className="row" key={item.id}>
-                <button id={index} onClick={(e)=>addToFavorites(e)} type="button" className="col-3 btn btn-outline-warning">
+                <button id={index} onClick={(e)=>addToFavorites(e)} type="button" className="col-3 btn btn-outline-warning" data-toggle="modal" data-target="#exampleModal">
                     Add to FavOrites
                 </button>
                 <div className="col-2">{item.id}</div>
@@ -12,7 +12,7 @@ function DataReceived ({items, addToFavorites}) {
             </div>
         )
     })
-    console.log(data)
+    // console.log(data)
 
     return (
         <React.Fragment>

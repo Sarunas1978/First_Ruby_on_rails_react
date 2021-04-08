@@ -1,8 +1,9 @@
 import React from 'react';
 
-function Favorites ({favorites, removeFromFavorites}) {
+function Favorites ({favorites, removeFromFavorites, updateFavorites}) {
 
     let data = favorites.map((item,index) => {
+
         return (
             <div className="row" key={item.id}>
                 <button id={index} onClick={() => removeFromFavorites(index)} type="button" className="col-2 btn btn-outline-danger ">
@@ -14,13 +15,13 @@ function Favorites ({favorites, removeFromFavorites}) {
                     Update
                 </button> */}
                 <div className="col-5 input-group-prepend">
-                    <button className="btn btn-outline-success" type="submit">Update</button>
+                    <button onClick={(e) => updateFavorites(e.target.nextSibling.value, index)} className="btn btn-outline-success" type="button">Update</button>
                     <input type="text" className="form-control h-auto" placeholder="Enter the car name!" />
                 </div>
             </div>
         )
     })
-    console.log("favorites: ",favorites)
+    // console.log("favorites: ",favorites)
 
     return (
         <React.Fragment>
