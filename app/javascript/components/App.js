@@ -12,8 +12,15 @@ const getLocalData = JSON.parse(localStorage.getItem('favorites') || "0");
 
 
     useEffect( ()=> {
-        getLocalData!==0 ? setFavorites(getLocalData) : getData()
+        getLocalData!==0 && getLocalData.length!==0 ? setFavorites(getLocalData) : null;
+        getData();
     },[])
+
+    useEffect( () => {
+        try{
+           localStorage.setItem('favorites',JSON.stringify(favorites));
+        } catch {()=> console.log("something went wrong")}
+    },[favorites])
     
     function getData(){
         axios.get('https://vpic.nhtsa.dot.gov/api/vehicles/getallmanufacturers?format=json')
@@ -30,19 +37,20 @@ const getLocalData = JSON.parse(localStorage.getItem('favorites') || "0");
     }
 
     let addToFavorites = (e) => {
-        e.preventDefault();
-        console.log(e.target.id);
+        checkForDublicates()
         setFavorites(favorites.concat(items[e.target.id]))
-       
     }
-  
+
+    let removeFromFavorites = function(id) {
+        setFavorites(favorites.slice(0,id).concat(favorites.slice(id+1,favorites.length)))
+    }
 
         return(
             <div className="container">
                 <div className="row">
                     <div className="col-8 pl-0">
                         <div className="h-70 d-flex justify-content-center align-items-center text-white w-100 p  bg-info">
-                           FAVORITES
+                           FAVORITES LIST
                         </div>
                     </div>
                     <div className="col-4 p-0">
@@ -53,7 +61,7 @@ const getLocalData = JSON.parse(localStorage.getItem('favorites') || "0");
                 </div>
                 <div className="row">
                     <div className="col-8">
-                        <Favorites favorites={favorites} />
+                        <Favorites favorites={favorites} removeFromFavorites={removeFromFavorites} />
                     </div>
                     <div className="col-4">
                         <DataReceived items={items} addToFavorites={addToFavorites} />
