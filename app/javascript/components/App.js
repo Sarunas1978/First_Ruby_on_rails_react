@@ -83,7 +83,7 @@ const getLocalData = JSON.parse(localStorage.getItem('favorites') || "0");
                     </div>
                 </div>
             </div>
-            {error && <Modal />}
+                {error && <Modal errorWash={()=> setError(!error)}/>}
             </>
         )
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-let Modal = () => {
+let Modal = ({errorWash}) => {
     return (
         <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog" role="document">
@@ -15,7 +15,7 @@ let Modal = () => {
                     It's not possible to add the same *** number to the Favorites
                 </div>
                 <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" onClick={()=>errorWash()} className="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
                 </div>
             </div>
